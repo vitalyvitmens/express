@@ -1,15 +1,19 @@
 document.addEventListener('click', (event) => {
+  const id = event.target.dataset.id
   if (event.target.dataset.type === 'remove') {
-    const id = event.target.dataset.id
-
     remove(id).then(() => {
       event.target.closest('li').remove()
     })
   } else if (event.target.dataset.type === 'edit') {
-    const editTitle = prompt('Введите новое название')
+    // обработка клика на клиенте
+    const newTitle = prompt('Введите новое название')
 
-    edit(editTitle).then(() => {
-    })
+    if (newTitle) {
+      edit(newTitle).then(() => {
+        console.log('editId:', id)
+        // event.target.closest('li')
+      })
+    }
   }
 })
 

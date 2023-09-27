@@ -8,7 +8,7 @@ const {
   editNote,
 } = require('./notes.controller')
 
-const port = 3000
+const PORT = 3000
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -45,15 +45,16 @@ app.delete('/:id', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
+  console.log('req.params.id:', req.params.id) // получение на серваке id элемента по которому совершен клик 
   await editNote(req.params.id)
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
-    created: true,
+    created: false,
   })
 })
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}/`)
-  console.log(chalk.green(`Server has been started on port ${port}...`))
+app.listen(PORT, () => {
+  console.log(`http://localhost:${PORT}/`)
+  console.log(chalk.green(`Server has been started on port ${PORT}...`))
 })

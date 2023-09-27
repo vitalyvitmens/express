@@ -44,12 +44,12 @@ async function removeNote(id) {
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
-async function editNote(id) {
+async function editNote(newTitle) {
   const notes = await getNotes()
 
   // const editedNote = notes.filter((note) => note.id === id)
   const note = {
-    title: id,
+    title: newTitle,
     id: Date.now().toString(),
   }
 
@@ -57,7 +57,7 @@ async function editNote(id) {
 
   await saveNotes(notes)
   console.log(
-    chalk.yellow(`Note with id="${note.id}" has been changed title="${id}".`)
+    chalk.yellow(`Note with id="${note.id}" has been changed title="${newTitle}".`)
   )
 }
 
