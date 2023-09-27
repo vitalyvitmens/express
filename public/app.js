@@ -5,9 +5,18 @@ document.addEventListener('click', (event) => {
     remove(id).then(() => {
       event.target.closest('li').remove()
     })
+  } else if (event.target.dataset.type === 'edit') {
+    const editTitle = prompt('Введите новое название')
+
+    edit(editTitle).then(() => {
+    })
   }
 })
 
 async function remove(id) {
   await fetch(`/${id}`, { method: 'DELETE' })
+}
+
+async function edit(id) {
+  await fetch(`/${id}`, { method: 'PUT' })
 }
