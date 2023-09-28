@@ -45,7 +45,7 @@ app.delete('/:id', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
-  console.log('req.params.id:', req.params.id) // получение на серваке id элемента по которому совершен клик 
+  console.log('From index.js req.params.id:', req.params.id) // получение на серваке id элемента по которому совершен клик 
   await editNote(req.params.id)
   res.render('index', {
     title: 'Express App',
