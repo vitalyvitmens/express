@@ -8,7 +8,7 @@ const {
   editNote,
 } = require('./notes.controller')
 
-const PORT = 3000
+const PORT = 3001
 const app = express()
 
 app.set('view engine', 'ejs')
