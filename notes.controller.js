@@ -1,25 +1,26 @@
 const fs = require('fs/promises')
 const path = require('path')
 const chalk = require('chalk')
+const Note = require('./models/Note')
 
 const notesPath = path.join(__dirname, 'db.json')
 
 async function addNote(title) {
-  const notes = await getNotes()
-  const note = {
-    title,
-    id: Date.now().toString(),
-  }
-
-  notes.push(note)
-
-  await saveNotes(notes)
+  await Note.create({ title })
   console.log(chalk.bgGreen('Note was added!'))
 }
 
 async function getNotes() {
-  const notes = await fs.readFile(notesPath, { encoding: 'utf-8' })
-  return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : []
+  const notes = await Note.find()
+
+  // console.log(notes[0].id)
+  // console.log(notes[1].id)
+  // console.log(notes[2].id)
+  // console.log(notes[0]._id)
+  // console.log(notes[1]._id)
+  // console.log(notes[2]._id)
+
+  return notes
 }
 
 async function saveNotes(notes) {
@@ -44,7 +45,7 @@ async function removeNote(id) {
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
-async function editNote(id) {
+async function updateNote(id) {
   console.log('From notes.controller.js id:', id)
   const notes = await getNotes()
 
@@ -73,5 +74,5 @@ module.exports = {
   addNote,
   getNotes,
   removeNote,
-  editNote,
+  updateNote,
 }

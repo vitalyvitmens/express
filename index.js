@@ -1,11 +1,13 @@
 const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
+const mongoose = require('mongoose')
+const Note = require('./models/Note')
 const {
   addNote,
   getNotes,
   removeNote,
-  editNote,
+  updateNote,
 } = require('./notes.controller')
 
 const PORT = 3001
@@ -23,16 +25,28 @@ app.get('/', async (req, res) => {
     title: 'Express App',
     notes: await getNotes(),
     created: false,
+    error: false,
   })
 })
 
 app.post('/', async (req, res) => {
-  await addNote(req.body.title)
-  res.render('index', {
-    title: 'Express App',
-    notes: await getNotes(),
-    created: true,
-  })
+  try {
+    await addNote(req.body.title)
+    res.render('index', {
+      title: 'Express App',
+      notes: await getNotes(),
+      created: true,
+      error: false,
+    })
+  } catch (error) {
+    console.error('Creation error', error)
+    res.render('index', {
+      title: 'Express App',
+      notes: await getNotes(),
+      created: false,
+      error: true,
+    })
+  }
 })
 
 app.delete('/:id', async (req, res) => {
@@ -45,8 +59,7 @@ app.delete('/:id', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
-  console.log('From index.js req.params.id:', req.params.id) // получение на серваке id элемента по которому совершен клик 
-  await editNote(req.params.id)
+  await updateNote({ id: req.params.id, title: req.body.title })
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),
@@ -54,7 +67,13 @@ app.put('/:id', async (req, res) => {
   })
 })
 
-app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}/`)
-  console.log(chalk.green(`Server has been started on port ${PORT}...`))
-})
+mongoose
+  .connect(
+    'mongodb+srv://test:test123@cluster0.zgcseqm.mongodb.net/notes?retryWrites=true&w=majority'
+  )
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`http://localhost:${PORT}/`)
+      console.log(chalk.green(`Server has been started on port ${PORT}...`))
+    })
+  })
