@@ -6,15 +6,13 @@ document.addEventListener('click', (event) => {
       event.target.closest('li').remove()
     })
   } else if (event.target.dataset.type === 'edit') {
-    // обработка клика на клиенте
     const newTitle = prompt('Введите новое название')
 
     if (newTitle) {
-      edit(id, newTitle).then(() => {
-        console.log('From app.js edit id:', id)
-        console.log('From app.js edit newTitle:', newTitle)
-        // event.target.closest('li')
-      })
+      edit(id, newTitle).then(() => ({
+        id: id,
+        title: newTitle,
+      }))
     }
   }
 })

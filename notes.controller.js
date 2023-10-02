@@ -44,29 +44,14 @@ async function removeNote(id) {
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
-async function updateNote(id) {
-  console.log('From notes.controller.js id:', id)
+async function updateNote(noteData) {
   const notes = await getNotes()
-
-  const getNoteById = notes.find((note) => note.id === id)
-  console.log('From notes.controller.js getNoteById.id:', getNoteById.id)
-  console.log('From notes.controller.js getNoteById.title:', getNoteById.title)
-
-  const oldNote = {
-    title: 'oldNoteTitle',
-    id: 'oldNoteId',
+  const index = notes.findIndex((note) => note.id === noteData.id)
+  if (index >= 0) {
+    notes[index] = { ...notes[index], ...noteData }
+    await saveNotes(notes)
+    console.log(chalk.green(`Note with id="${noteData.id}" has been updated!`))
   }
-  const newNote = {
-    title: getNoteById.title,
-    id: getNoteById.id,
-  }
-
-  const updatedNotes = notes.map((note) => (note.id === id ? newNote : oldNote))
-  console.log('updatedNotes', updatedNotes)
-  await saveNotes(notes)
-  console.log(
-    chalk.yellow(`Note with id="${id}" has been changed title="${id}".`)
-  )
 }
 
 module.exports = {
