@@ -55,6 +55,7 @@ app.delete('/:id', async (req, res) => {
     title: 'Express App',
     notes: await getNotes(),
     created: false,
+    error: false,
   })
 })
 
@@ -64,6 +65,7 @@ app.put('/:id', async (req, res) => {
     title: 'Express App',
     notes: await getNotes(),
     created: false,
+    error: false,
   })
 })
 
