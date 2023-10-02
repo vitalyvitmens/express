@@ -5,7 +5,7 @@ const {
   addNote,
   getNotes,
   removeNote,
-  editNote,
+  updateNote,
 } = require('./notes.controller')
 
 const PORT = 3001
@@ -45,8 +45,7 @@ app.delete('/:id', async (req, res) => {
 })
 
 app.put('/:id', async (req, res) => {
-  console.log('From index.js req.params.id:', req.params.id) // получение на серваке id элемента по которому совершен клик 
-  await editNote(req.params.id)
+  await updateNote({ id: req.params.id, title: req.body.title })
   res.render('index', {
     title: 'Express App',
     notes: await getNotes(),

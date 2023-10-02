@@ -44,7 +44,7 @@ async function removeNote(id) {
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
-async function editNote(id) {
+async function updateNote(id) {
   console.log('From notes.controller.js id:', id)
   const notes = await getNotes()
 
@@ -73,5 +73,5 @@ module.exports = {
   addNote,
   getNotes,
   removeNote,
-  editNote,
+  updateNote,
 }
