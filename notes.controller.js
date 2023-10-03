@@ -26,15 +26,6 @@ async function saveNotes(notes) {
   await fs.writeFile(notesPath, JSON.stringify(notes))
 }
 
-async function printNotes() {
-  const notes = await getNotes()
-
-  console.log(chalk.bgBlue('Here is the list of notes:'))
-  notes.forEach((note) => {
-    console.log(chalk.bgWhite(note.id), chalk.blue(note.title))
-  })
-}
-
 async function removeNote(id) {
   const notes = await getNotes()
 
@@ -47,6 +38,7 @@ async function removeNote(id) {
 async function updateNote(noteData) {
   const notes = await getNotes()
   const index = notes.findIndex((note) => note.id === noteData.id)
+
   if (index >= 0) {
     notes[index] = { ...notes[index], ...noteData }
     await saveNotes(notes)
