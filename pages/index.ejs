@@ -36,9 +36,9 @@
           <li
             class="list-group-item d-flex justify-content-between align-items-center"
           >
-            <div class="text-info"><%= notes[i].id %></div>
-            <div class="text-black"><%= notes[i].title %></div>
-            <div></div>
+            <span> <%= notes[i].title %> </span>
+            <span> <%= notes[i].owner %> </span>
+            <% if (notes[i].owner === userEmail) { %>
             <div>
               <button
                 class="btn btn-primary"
@@ -55,6 +55,7 @@
                 &times;
               </button>
             </div>
+            <% } %>
           </li>
           <% } %>
         </ul>
