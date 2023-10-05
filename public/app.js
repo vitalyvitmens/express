@@ -8,11 +8,11 @@ document.addEventListener('click', (event) => {
   }
 
   if (event.target.dataset.type === 'edit') {
-    const title = prompt('Введите новое название')
+    const newTitle = prompt('Введите новое название')
 
-    if (title) {
-      edit({ id, title }).then(() => {
-        location.reload()
+    if (newTitle) {
+      edit({ id, title: newTitle }).then(() => {
+        // location.reload()
       })
     }
   }
