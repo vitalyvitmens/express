@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const express = require('express')
 const chalk = require('chalk')
 const path = require('path')
@@ -13,7 +14,7 @@ const {
 const { addUser, loginUser } = require('./users.controller')
 const auth = require('./middlewares/auth')
 
-const PORT = 3000
+const port = 3000
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -42,10 +43,10 @@ app.post('/login', async (req, res) => {
     res.cookie('token', token, { httpOnly: true })
 
     res.redirect('/')
-  } catch (error) {
+  } catch (e) {
     res.render('login', {
       title: 'Express App',
-      error: error.message,
+      error: e.message,
     })
   }
 })
@@ -62,8 +63,8 @@ app.post('/register', async (req, res) => {
     await addUser(req.body.email, req.body.password)
 
     res.redirect('/login')
-  } catch (error) {
-    if (error.code === 11000) {
+  } catch (e) {
+    if (e.code === 11000) {
       res.render('register', {
         title: 'Express App',
         error: 'Email is already registered',
@@ -73,7 +74,7 @@ app.post('/register', async (req, res) => {
     }
     res.render('register', {
       title: 'Express App',
-      error: error.message,
+      error: e.message,
     })
   }
 })
@@ -128,14 +129,15 @@ app.delete('/:id', async (req, res) => {
       created: false,
       error: false,
     })
-  } catch (error) {
+  } catch (e) {
     res.render('index', {
       title: 'Express App',
       notes: await getNotes(),
       userEmail: req.user.email,
       created: false,
-      error: error.message,
+      error: e.message,
     })
+    console.log(req.params.id)
   }
 })
 
@@ -149,20 +151,20 @@ app.put('/:id', async (req, res) => {
       created: false,
       error: false,
     })
-  } catch (error) {
+  } catch (e) {
     res.render('index', {
       title: 'Express App',
       notes: await getNotes(),
       userEmail: req.user.email,
       created: false,
-      error: error.message,
+      error: e.message,
     })
   }
 })
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(() => {
-  app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}/`)
-    console.log(chalk.green(`Server has been started on port ${PORT}...`))
+  app.listen(port, () => {
+    console.log(`http://localhost:${port}/`)
+    console.log(chalk.green(`Server has been started on port ${port}...`))
   })
 })

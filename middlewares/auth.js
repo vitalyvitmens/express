@@ -12,7 +12,7 @@ function auth(req, res, next) {
     }
 
     next()
-  } catch (error) {
+  } catch (e) {
     res.redirect('/login')
   }
 }

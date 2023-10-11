@@ -14,7 +14,7 @@ async function getNotes() {
 }
 
 async function removeNote(id, owner) {
-  const result = await Note.deleteOne({ _id: id, owner })
+  await Note.deleteOne({ _id: id, owner })
 
   if (result.matchedCount === 0) {
     throw new Error('No note to delete')
@@ -28,12 +28,11 @@ async function updateNote(noteData, owner) {
     { _id: noteData.id, owner },
     { title: noteData.title }
   )
+  console.log(chalk.bgGreen(`Note with id="${noteData.id}" has been updated!`))
 
   if (result.matchedCount === 0) {
     throw new Error('No note to edit')
   }
-
-  console.log(chalk.bgGreen(`Note with id="${noteData.id}" has been updated!`))
 }
 
 module.exports = {
