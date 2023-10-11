@@ -12,7 +12,8 @@ document.addEventListener('click', (event) => {
 
     if (newTitle) {
       edit({ id, title: newTitle }).then(() => {
-        // location.reload()
+        event.target.closest('li').querySelector('.text-black').textContent =
+          newTitle
       })
     }
   }
