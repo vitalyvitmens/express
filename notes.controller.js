@@ -3,7 +3,6 @@ const Note = require('./models/Note')
 
 async function addNote(title) {
   await Note.create({ title })
-
   console.log(chalk.bgGreen('Note was added!'))
 }
 
