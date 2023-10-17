@@ -13,7 +13,7 @@ const {
 const { addUser, loginUser } = require('./users.controller')
 const auth = require('./middlewares/auth')
 
-const PORT = 3000
+const PORT = 3003
 const app = express()
 
 app.set('view engine', 'ejs')
