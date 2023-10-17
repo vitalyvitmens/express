@@ -13,8 +13,8 @@ async function getNotes() {
   return notes
 }
 
-async function removeNote(id, owner) {
-  const result = await Note.deleteOne({ _id: id, owner })
+async function removeNote(id) {
+  const result = await Note.findByIdAndRemove({ _id: id })
 
   if (result.matchedCount === 0) {
     throw new Error('No note to delete')
@@ -23,9 +23,9 @@ async function removeNote(id, owner) {
   console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
-async function updateNote(noteData, owner) {
+async function updateNote(noteData) {
   const result = await Note.updateOne(
-    { _id: noteData.id, owner },
+    { _id: noteData.id },
     { title: noteData.title }
   )
 
